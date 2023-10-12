@@ -17,6 +17,10 @@ class MoviesController < ApplicationController
     render({ :template => "movies/show" })
   end
 
+  def new
+    render({ :template => "movies/new"})
+  end
+
   def create
     the_movie = Movie.new
     the_movie.title = params.fetch("query_title")
@@ -29,6 +33,11 @@ class MoviesController < ApplicationController
     else
       redirect_to("/movies", { :alert => the_movie.errors.full_messages.to_sentence })
     end
+  end
+
+  def edit
+    @the_movie = Movie.where(id: params.fetch(:id))[0]
+    render({ :template => "/movies/edit"})
   end
 
   def update
